@@ -44,7 +44,7 @@ var drawBarChart = function(data)
 
 var mathFunction = function(d)
 {
-  console.log(d.final.grade);
+  console.log(d.final[0].grade);
 }
 
 dataP.then(function(data)
