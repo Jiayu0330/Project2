@@ -39,6 +39,8 @@ var drawBarChart = function(data)
      .append("rect")
      .attr("x", function(d, i) {return i * barWidth + margins.left; } )
      .attr("y", function(d) {return yScale(mathFunction(d));} )
+     .attr("width", barWidth - innerPadding)
+     .attr("height", function(d) {return height - yScale(mathFunction(d));})
 
 }
 
