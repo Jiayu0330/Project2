@@ -3,8 +3,8 @@ var dataP = d3.json("classData.json");
 var drawBarChart = function(data)
 {
   var screen = { //the size of svg
-    width: 600,
-    height: 300
+    width: 1200,
+    height: 400
   }
 
   var margins = {
@@ -33,6 +33,8 @@ var drawBarChart = function(data)
               .attr("width", screen.width)
               .attr("height", screen.height)
 
+  var colors = d3.scaleOrdinal(d3.schemeCategory10)
+
   svg.selectAll("rect")
      .data(data)
      .enter()
@@ -41,6 +43,7 @@ var drawBarChart = function(data)
      .attr("y", function(d) {return yScale(mathFunction(d));} )
      .attr("width", barWidth - innerPadding)
      .attr("height", function(d) {return height - yScale(mathFunction(d));})
+     .attr("fill", function(d,i){return colors(i)})
 
 }
 
