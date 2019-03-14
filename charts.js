@@ -44,7 +44,29 @@ var drawBarChart = function(data)
 
 var mathFunction = function(d)
 {
-  console.log(d.final[0].grade);
+  // console.log(d.final[0].grade);
+  var final = d.final[0].grade;
+  // console.log(final)
+  var total_homework = 0
+  d.homework.forEach(function(d){total_homework += d.grade});
+  // console.log(total_homework)
+  var homework = (total_homework / 19) * 2;
+  // console.log(homework);
+  var total_quiz = 0
+  d.quizes.forEach(function(d){total_quiz += d.grade})
+  // console.log(total_quiz)
+  var quiz = (total_quiz / 38) * 10
+  // console.log(quiz)
+  var total_test = 0
+  d.test.forEach(function(d){total_test += d.grade})
+  var test = total_test / 2
+  // console.log(test)
+  var grade_total = (final * 0.3) + (homework * 0.15) + (quiz * 0.15) + (test * 0.4)
+  console.log(grade_total)
+  console.log(d.picture)
+
+  return grade_total
+
 }
 
 dataP.then(function(data)
