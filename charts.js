@@ -3,8 +3,8 @@ var dataP = d3.json("classData.json");
 var drawBarChart = function(data)
 {
   var screen = { //the size of svg
-    width: 1200,
-    height: 400
+    width: 800,
+    height: 350
   }
 
   var margins = {
@@ -35,15 +35,38 @@ var drawBarChart = function(data)
 
   var colors = d3.scaleOrdinal(d3.schemeCategory10)
 
-  svg.selectAll("rect")
+  svg.append("g")
+     .classed("rect", true)
+     .selectAll("rect")
      .data(data)
      .enter()
      .append("rect")
-     .attr("x", function(d, i) {return i * barWidth + margins.left; } )
+     .attr("x", function(d, i) {return i * barWidth + margins.left;} )
      .attr("y", function(d) {return yScale(mathFunction(d));} )
      .attr("width", barWidth - innerPadding)
      .attr("height", function(d) {return height - yScale(mathFunction(d));})
-     .attr("fill", function(d,i){return colors(i)})
+     .attr("fill", function(d, i) {return colors(i)});
+
+  svg.append("g")
+     .classed("textAbove", true)
+     .selectAll("text")
+     .data(data)
+     .enter()
+     .append("text")
+     .attr("x",function(d,i) {return i * barWidth + margins.left + 3;} )
+     .attr("y",function(d) {return yScale(mathFunction(d)) - 8;} )
+     .text(function(d){
+       if (mathFunction(d) != 0)
+       {return Math.round(mathFunction(d));} } );
+
+  //draw axis
+  var xAxis = d3.axisBottom(xScale);
+  var yAxis = d3.axisLeft(yScale);
+
+  svg.append("g")
+     .classed("yAxis", true)
+     .call(yAxis)
+     .attr("transform", "translate(" + (margins.left - innerPadding) + ",0)");
 
 }
 
@@ -52,26 +75,24 @@ var mathFunction = function(d)
   // console.log(d.final[0].grade);
   var final = d.final[0].grade;
   // console.log(final)
-  var total_homework = 0
+  var total_homework = 0;
   d.homework.forEach(function(d){total_homework += d.grade});
   // console.log(total_homework)
   var homework = (total_homework / 19) * 2;
   // console.log(homework);
-  var total_quiz = 0
-  d.quizes.forEach(function(d){total_quiz += d.grade})
+  var total_quiz = 0;
+  d.quizes.forEach(function(d){total_quiz += d.grade});
   // console.log(total_quiz)
-  var quiz = (total_quiz / 38) * 10
+  var quiz = (total_quiz / 38) * 10;
   // console.log(quiz)
-  var total_test = 0
-  d.test.forEach(function(d){total_test += d.grade})
-  var test = total_test / 2
+  var total_test = 0;
+  d.test.forEach(function(d){total_test += d.grade});
+  var test = total_test / 2;
   // console.log(test)
-  var grade_total = (final * 0.3) + (homework * 0.15) + (quiz * 0.15) + (test * 0.4)
-  console.log(grade_total)
-  console.log(d.picture)
-
-  return grade_total
-
+  var total_grade = (final * 0.3) + (homework * 0.15) + (quiz * 0.15) + (test * 0.4);
+  //console.log(grade_total)
+  //console.log(d.picture)
+  return total_grade;
 }
 
 dataP.then(function(data)
