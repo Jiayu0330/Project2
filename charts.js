@@ -211,10 +211,10 @@ var drawChangingLineChart = function(data)
     dayArray.push(i);
   };
 
-  console.log(dayArray);
+  // console.log(dayArray);
 
   var drawLine = d3.line()
-                   .x(function(d,i) {return xScale()})
+                   .x(function(d){console.log(xScale(d)); return xScale(d);})
 
 
 
@@ -222,7 +222,7 @@ var drawChangingLineChart = function(data)
   svg.append("g")
      .classed("lines", true)
      .append("path")
-     .datum(data)
+     .datum(dayArray)
      .attr("d", drawLine)
      .attr("fill", none)
 
