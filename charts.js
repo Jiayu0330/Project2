@@ -207,6 +207,12 @@ var drawChangingLineChart = function(data)
 
   var dayArray = []
 
+  for (i = 0; i < 41; i++) {
+    dayArray.push(i);
+  };
+
+  console.log(dayArray);
+
   var drawLine = d3.line()
                    .x(function(d,i) {return xScale()})
 
