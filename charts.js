@@ -196,7 +196,7 @@ var drawChangingLineChart = function(data)
                  .range([margins.left, width]);
 
   var yScale = d3.scaleLinear()
-                 .domain([0, 100])
+                 .domain([0, 1])
                  .range([height, margins.top]);
 
   var svg = d3.select(".changingLineChart")
@@ -205,52 +205,61 @@ var drawChangingLineChart = function(data)
 
   var colors = d3.scaleOrdinal(d3.schemeCategory10)
 
-  var dayArray = []
-
-  for (i = 0; i < 41; i++) {
-    dayArray.push(i);
-  };
-
-  // console.log(dayArray);
-
   var drawLine = d3.line()
-                   .x(function(d){console.log(xScale(d)); return xScale(d);})
+                   .x(function(d,i){return xScale(i);})
+                   .y(function(d){return yScale(d)});
 
+  data.forEach(function(d,i){
+    penguinData = calculatePenguinData(d);
+    // console.log(penguinData);
 
+    svg.append("path")
+       .datum(penguinData)
+       .attr("class", "line")
+       .attr("d", drawLine)
+       .attr("fill", "none")
+       .attr("stroke", colors(i))
+     });
 
-
-  svg.append("g")
-     .classed("lines", true)
-     .append("path")
-     .datum(dayArray)
-     .attr("d", drawLine)
-     .attr("fill", none)
-
-  svg.append("g")
-     .classed("textAbove", true)
-     .selectAll("text")
-     .data(data)
-     .enter()
-     .append("text")
-     .attr("x",function(d,i) {return i * barWidth + margins.left + 3;})
-     .attr("y",function(d) {return yScale(mathFunction(d)) - 8;})
-     .text(function(d){
-       if (mathFunction(d) != 0)
-       {
-         return Math.round(mathFunction(d));
-       }});
-
-  //y-axis
   var yAxis = d3.axisLeft(yScale);
 
-  svg.append("g")
-     .classed("yAxis", true)
-     .call(yAxis)
-     .attr("transform", "translate(" + (margins.left - innerPadding) + ",0)");
+}
 
-  // var dayNumber = 0
-  //
-  // buttonUpdate(data,dayNumber)
+var calculatePenguinData = function(data){ // data = one penguin
+  var gradeData = []
+
+  for (i = 0; i < 41; i++){
+    gradeData.push(calculateOneDayGrade(data, i))
+  }
+
+  // console.log(gradeData)
+
+  console.log(gradeData)
+
+  return gradeData
+}
+
+var calculateOneDayGrade = function(data, dayNumber){
+  if (dayNumber == 40) {
+    var grade = data.final[0].grade / data.final[0].max;
+  }
+  else if (dayNumber == 14) {
+    var grade = data.test[0].grade / data.test[0].max;
+  }
+  else if (dayNumber == 29) {
+    var grade = data.test[1].grade / data.test[1].max;
+  }
+  else if (dayNumber < 14) {
+    var grade = data.quizes[dayNumber].grade / data.quizes[dayNumber].max;
+  }
+  else if (dayNumber > 14 && dayNumber < 29) {
+    var grade = data.quizes[dayNumber - 1].grade / data.quizes[dayNumber - 1].max;
+  }
+  else if (dayNumber > 29 && dayNumber < 40) {
+    var grade = data.quizes[dayNumber - 2].grade / data.quizes[dayNumber - 2].max;
+  }
+
+  return grade
 }
 
 dataP.then(function(data)
@@ -258,6 +267,7 @@ dataP.then(function(data)
   drawOverallBarChart(data); //Final grade of each penguin
   drawChangingBarChart(data);
   drawChangingLineChart(data);
+  // calculatePenguinData(data[0]); // temporary
 },
 function(err)
 {
