@@ -174,11 +174,84 @@ var drawChangingBarChart = function(data)
 //     updateBarChart(data,dayNumber+1);
 //   })
 // }
+var drawChangingLineChart = function(data)
+{
+  var screen = { //the size of svg
+    width: 800,
+    height: 500
+  }
+
+  var margins = {
+    left: 50,
+    top: 20,
+    bottom: 40,
+    right: 0
+  }
+
+  var width = screen.width - margins.left - margins.right;
+  var height = screen.height - margins.top - margins.bottom;
+
+  var xScale = d3.scaleLinear()
+                 .domain([0, 40])
+                 .range([margins.left, width]);
+
+  var yScale = d3.scaleLinear()
+                 .domain([0, 100])
+                 .range([height, margins.top]);
+
+  var svg = d3.select(".changingLineChart")
+              .attr("width", screen.width)
+              .attr("height", screen.height)
+
+  var colors = d3.scaleOrdinal(d3.schemeCategory10)
+
+  var dayArray = []
+
+  var drawLine = d3.line()
+                   .x(function(d,i) {return xScale()})
+
+
+
+
+  svg.append("g")
+     .classed("lines", true)
+     .append("path")
+     .datum(data)
+     .attr("d", drawLine)
+     .attr("fill", none)
+
+  svg.append("g")
+     .classed("textAbove", true)
+     .selectAll("text")
+     .data(data)
+     .enter()
+     .append("text")
+     .attr("x",function(d,i) {return i * barWidth + margins.left + 3;})
+     .attr("y",function(d) {return yScale(mathFunction(d)) - 8;})
+     .text(function(d){
+       if (mathFunction(d) != 0)
+       {
+         return Math.round(mathFunction(d));
+       }});
+
+  //y-axis
+  var yAxis = d3.axisLeft(yScale);
+
+  svg.append("g")
+     .classed("yAxis", true)
+     .call(yAxis)
+     .attr("transform", "translate(" + (margins.left - innerPadding) + ",0)");
+
+  // var dayNumber = 0
+  //
+  // buttonUpdate(data,dayNumber)
+}
 
 dataP.then(function(data)
 {
   drawOverallBarChart(data); //Final grade of each penguin
   drawChangingBarChart(data);
+  drawChangingLineChart(data);
 },
 function(err)
 {
