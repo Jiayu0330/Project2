@@ -140,7 +140,7 @@ var drawChangingBarChart = function(data)
      .attr("y", function(d) {return yScale(mathFunction(d));})
      .attr("width", barWidth - innerPadding)
      .attr("height", function(d) {return height - yScale(mathFunction(d));})
-     .attr("fill", function(d, i) {return colors(i)});
+     .attr("fill", function(d, i) {return colors(i)})
 
   svg.append("g")
      .classed("textAbove", true)
@@ -163,7 +163,17 @@ var drawChangingBarChart = function(data)
      .classed("yAxis", true)
      .call(yAxis)
      .attr("transform", "translate(" + (margins.left - innerPadding) + ",0)");
+
+  // var dayNumber = 0
+  //
+  // buttonUpdate(data,dayNumber)
 }
+
+// var buttonUpdate = function(data,dayNumber){
+//   d3.select("#NextButton").on("click",function(d){
+//     updateBarChart(data,dayNumber+1);
+//   })
+// }
 
 dataP.then(function(data)
 {
