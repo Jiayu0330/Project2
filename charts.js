@@ -218,7 +218,8 @@ var drawChangingLineChart = function(data)
   data.forEach(function(d,i){
     penguinData = calculatePenguinData(d);
     // console.log(penguinData);
-    var name = d.picture
+    var name = d.picture.replace(".png","")
+    console.log(name);
 
     svg.append("path")
        .datum(penguinData)
@@ -329,18 +330,16 @@ var hideLines = function(){
 }
 
 var showOneLine = function(penguinName){
-  console.log(penguinName)
   var name = "." + penguinName
   console.log(name)
-  var totalName = "path " + name
-  console.log(totalName)
+  var name = name.replace(".png","")
 
   // var svg = d3.select(".changingLineChart");
 
   // d3.select(".changingLineChart")
-    d3.select(name)
-    .attr("opacity",1)
-    .attr("stroke-width",5);
+  d3.select(".changingLineChart")
+    .selectAll(name)
+    .attr("opacity", 1)
 }
 
 dataP.then(function(data)
