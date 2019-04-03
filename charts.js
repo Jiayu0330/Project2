@@ -184,13 +184,13 @@ var drawChangingLineChart = function(data)
 {
   var screen = { //the size of svg
     width: 1400,
-    height: 500
+    height: 800
   }
 
   var margins = {
     left: 50,
     top: 20,
-    bottom: 40,
+    bottom: 340,
     right: 0
   }
 
@@ -226,7 +226,33 @@ var drawChangingLineChart = function(data)
        .attr("fill", "none")
        .attr("stroke", colors(i))
        .attr("stroke-width", 3)
+       .attr("opacity",0);
+       // .append("image")
+       // .attr("xlink:href",function(d){return d.picture})
+       // .attr("x",function(d,i){return i*300})
+       // .attr("y",500)
+
+    console.log(d.picture);
+
+    var img = document.createElement("img");
+
+    img.src = d.picture
+    img.alt = "no"
+    img.width = "100"
+    img.height = "100"
+
+    // img.setAttribute("src",d.picture);
+    // img.setAttribute("alt","no");
+    // img.setAttribute("width","100");
+    // img.setAttribute("height","100");
+
      });
+
+  // svg.selectAll("image")
+  //    .data(data)
+  //    .enter()
+  //    .attr("xlink:href",function(d){return d.penguin})
+  //    .attr("x", function(d,i){return })
 
   var yAxis = d3.axisLeft(yScale);
 
@@ -239,9 +265,9 @@ var calculatePenguinData = function(data){ // data = one penguin
     gradeData.push(calculateOneDayGrade(data, i))
   }
 
-  // console.log(gradeData)
-
   console.log(gradeData)
+
+  // console.log(gradeData)
 
   return gradeData
 }
@@ -267,6 +293,35 @@ var calculateOneDayGrade = function(data, dayNumber){
   }
 
   return grade
+}
+
+var buttonFunction = function(){
+  var buttonId = document.getElementById("ShowAllButton").innerHTML
+
+  console.log(buttonId)
+
+  if (buttonId == "Show All"){
+    showLines()
+  }
+  else {
+    hideLines()
+  }
+}
+
+var showLines = function(){
+  d3.select(".changingLineChart")
+    .selectAll("path")
+    .attr("opacity", 1)
+
+  document.getElementById("ShowAllButton").innerHTML = "Hide All"
+}
+
+var hideLines = function(){
+  d3.select(".changingLineChart")
+    .selectAll("path")
+    .attr("opacity", 0)
+
+  document.getElementById("ShowAllButton").innerHTML = "Show All"
 }
 
 dataP.then(function(data)
