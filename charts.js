@@ -184,13 +184,13 @@ var drawChangingLineChart = function(data)
 {
   var screen = { //the size of svg
     width: 1400,
-    height: 800
+    height: 500
   }
 
   var margins = {
     left: 50,
     top: 20,
-    bottom: 340,
+    bottom: 40,
     right: 0
   }
 
@@ -218,33 +218,37 @@ var drawChangingLineChart = function(data)
   data.forEach(function(d,i){
     penguinData = calculatePenguinData(d);
     // console.log(penguinData);
+    var name = d.picture
 
     svg.append("path")
        .datum(penguinData)
-       .attr("class", "line")
+       .attr("class", name)
        .attr("d", drawLine)
        .attr("fill", "none")
        .attr("stroke", colors(i))
        .attr("stroke-width", 3)
-       .attr("opacity",0);
+       .attr("opacity",0)
        // .append("image")
        // .attr("xlink:href",function(d){return d.picture})
        // .attr("x",function(d,i){return i*300})
        // .attr("y",500)
 
-    console.log(d.picture);
-
-    var img = document.createElement("img");
-
-    img.src = d.picture
-    img.alt = "no"
-    img.width = "100"
-    img.height = "100"
+    // console.log(d.picture);
+    //
+    // var img = document.createElement("img");
+    //
+    // img.src = d.picture
+    // console.log(img.src)
+    // img.alt = "no"
+    // img.width = "100"
+    // img.height = "100"
 
     // img.setAttribute("src",d.picture);
     // img.setAttribute("alt","no");
     // img.setAttribute("width","100");
     // img.setAttribute("height","100");
+
+    console.log(d.picture)
 
      });
 
@@ -265,7 +269,7 @@ var calculatePenguinData = function(data){ // data = one penguin
     gradeData.push(calculateOneDayGrade(data, i))
   }
 
-  console.log(gradeData)
+  // console.log(gradeData)
 
   // console.log(gradeData)
 
@@ -298,7 +302,7 @@ var calculateOneDayGrade = function(data, dayNumber){
 var buttonFunction = function(){
   var buttonId = document.getElementById("ShowAllButton").innerHTML
 
-  console.log(buttonId)
+  // console.log(buttonId)
 
   if (buttonId == "Show All"){
     showLines()
@@ -322,6 +326,21 @@ var hideLines = function(){
     .attr("opacity", 0)
 
   document.getElementById("ShowAllButton").innerHTML = "Show All"
+}
+
+var showOneLine = function(penguinName){
+  console.log(penguinName)
+  var name = "." + penguinName
+  console.log(name)
+  var totalName = "path " + name
+  console.log(totalName)
+
+  // var svg = d3.select(".changingLineChart");
+
+  // d3.select(".changingLineChart")
+    d3.select(name)
+    .attr("opacity",1)
+    .attr("stroke-width",5);
 }
 
 dataP.then(function(data)
