@@ -183,7 +183,7 @@ var drawChangingBarChart = function(data)
 var drawChangingLineChart = function(data)
 {
   var screen = { //the size of svg
-    width: 1400,
+    width: 1350,
     height: 800
   }
 
@@ -245,10 +245,10 @@ var drawChangingLineChart = function(data)
     //
      image.append("image")
           .attr("xlink:href", name)
-          .attr("x", i*50)
+          .attr("x", margins.left/2 + i*57)
           .attr("y", 500)
-          .attr("width", 50)
-          .attr("height", 50)
+          .attr("width", 55)
+          .attr("height", 55)
           .on("click", function(){
             console.log(class_name)
             d3.select(".changingLineChart")
