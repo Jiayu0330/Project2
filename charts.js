@@ -202,7 +202,7 @@ var drawChangingLineChart = function(data)
                  .range([margins.left, width]);
 
   var yScale = d3.scaleLinear()
-                 .domain([0, 1])
+                 .domain([0, 100])
                  .range([height, margins.top]);
 
   var svg = d3.select(".changingLineChart")
@@ -333,7 +333,7 @@ var calculateOneDayGrade = function(data, dayNumber){
     var grade = data.quizes[dayNumber - 2].grade / data.quizes[dayNumber - 2].max;
   }
 
-  return grade
+  return grade * 100
 }
 
 var buttonFunction = function(){
