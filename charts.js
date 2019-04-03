@@ -1,5 +1,11 @@
 var dataP = d3.json("classData.json");
 
+var pengArray = ["Bookworm Penguin","Crafty Penguin","Cyclist Penguin","Drunken Penguin", "Easter Penguin",
+                 "EBook Penguin","Farmer Penguin","Gentleman Penguin","Judo Penguin","Moana Penguin",
+                 "Painter Penguin", "Grill Penguin", "Pharaoh Penguin", "Pilot Penguin","Pinga Corr",
+                 "Pixie Penguin","Sailor Penguin", "Santa Penguin", "Santa Penguin", "Tauch Penguin",
+                 "Tux Penguin", "Valentine Penguin","Valentine Penguin Ocal","Wizard Penguin"]
+
 var drawOverallBarChart = function(data)
 {
   var screen = { //the size of svg
