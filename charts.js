@@ -215,13 +215,15 @@ var drawChangingLineChart = function(data)
                    .x(function(d,i){return xScale(i);})
                    .y(function(d){return yScale(d)});
 
+  var path = svg.append("g")
+                .classed("path", true)
   data.forEach(function(d,i){
     penguinData = calculatePenguinData(d);
     // console.log(penguinData);
     var name = d.picture.replace(".png","")
     console.log(name);
 
-    svg.append("path")
+    path.append("path")
        .datum(penguinData)
        .attr("class", name)
        .attr("d", drawLine)
@@ -332,7 +334,7 @@ var hideLines = function(){
 var showOneLine = function(penguinName){
   var name = "." + penguinName
   console.log(name)
-  var name = name.replace(".png","")
+  var name = d.picture.replace(".png","")
 
   // var svg = d3.select(".changingLineChart");
 
