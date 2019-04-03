@@ -275,7 +275,23 @@ var drawChangingLineChart = function(data)
   //    .attr("xlink:href",function(d){return d.penguin})
   //    .attr("x", function(d,i){return })
 
-  var yAxis = d3.axisLeft(yScale);
+  var xAxis = d3.axisBottom()
+                .scale(xScale)
+                .ticks(41);
+
+  var yAxis = d3.axisLeft()
+                .scale(yScale)
+                .ticks(10);
+
+  svg.append("g")
+     .attr("class","axis")
+     .attr("transform", "translate(0," + height + ")")
+     .call(xAxis)
+
+  svg.append("g")
+     .attr("class","axis")
+     .attr("transform","translate(" + margins.left + ",0)")
+     .call(yAxis)
 
 }
 
@@ -331,15 +347,15 @@ var buttonFunction = function(){
 
 var showLines = function(){
   d3.select(".changingLineChart")
-    .selectAll("path")
-    .attr("opacity", 1)
+    .selectAll("g.path path")
+    .attr("opacity", 1);
 
   document.getElementById("ShowAllButton").innerHTML = "Hide All"
 }
 
 var hideLines = function(){
   d3.select(".changingLineChart")
-    .selectAll("path")
+    .selectAll("g.path path")
     .attr("opacity", 0)
 
   document.getElementById("ShowAllButton").innerHTML = "Show All"
