@@ -275,8 +275,12 @@ var drawChangingLineChart = function(data)
   //    .attr("xlink:href",function(d){return d.penguin})
   //    .attr("x", function(d,i){return })
 
+  var xAxisScale = d3.scaleLinear()
+                 .domain([1, 41])
+                 .range([margins.left, width]);
+
   var xAxis = d3.axisBottom()
-                .scale(xScale)
+                .scale(xAxisScale)
                 .ticks(41);
 
   var yAxis = d3.axisLeft()
