@@ -184,13 +184,13 @@ var drawChangingLineChart = function(data)
 {
   var screen = { //the size of svg
     width: 1400,
-    height: 500
+    height: 800
   }
 
   var margins = {
     left: 50,
     top: 20,
-    bottom: 40,
+    bottom: 340,
     right: 0
   }
 
@@ -217,15 +217,20 @@ var drawChangingLineChart = function(data)
 
   var path = svg.append("g")
                 .classed("path", true)
+
+  var image = svg.append("g")
+                 .classed("image", true)
   data.forEach(function(d,i){
     penguinData = calculatePenguinData(d);
     // console.log(penguinData);
-    var name = d.picture.replace(".png","")
-    console.log(name);
+    var name = d.picture;
+    var modified_name = d.picture.replace(".png","")
+    var class_name = "." + modified_name
+    //console.log(class_name);
 
     path.append("path")
        .datum(penguinData)
-       .attr("class", name)
+       .attr("class", modified_name)
        .attr("d", drawLine)
        .attr("fill", "none")
        .attr("stroke", colors(i))
@@ -238,7 +243,18 @@ var drawChangingLineChart = function(data)
 
     // console.log(d.picture);
     //
-    // var img = document.createElement("img");
+     image.append("image")
+          .attr("xlink:href", name)
+          .attr("x", i*50)
+          .attr("y", 500)
+          .attr("width", 50)
+          .attr("height", 50)
+          .on("click", function(){
+            console.log(class_name)
+            d3.select(".changingLineChart")
+              .selectAll(class_name)
+              .attr("opacity", 1)
+          })
     //
     // img.src = d.picture
     // console.log(img.src)
@@ -250,8 +266,6 @@ var drawChangingLineChart = function(data)
     // img.setAttribute("alt","no");
     // img.setAttribute("width","100");
     // img.setAttribute("height","100");
-
-    console.log(d.picture)
 
      });
 
@@ -332,9 +346,8 @@ var hideLines = function(){
 }
 
 var showOneLine = function(penguinName){
-  var name = "." + penguinName
+  var name = penguinName
   console.log(name)
-  var name = d.picture.replace(".png","")
 
   // var svg = d3.select(".changingLineChart");
 
