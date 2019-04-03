@@ -177,7 +177,7 @@ var drawChangingBarChart = function(data)
 var drawChangingLineChart = function(data)
 {
   var screen = { //the size of svg
-    width: 800,
+    width: 1400,
     height: 500
   }
 
@@ -219,6 +219,7 @@ var drawChangingLineChart = function(data)
        .attr("d", drawLine)
        .attr("fill", "none")
        .attr("stroke", colors(i))
+       .attr("stroke-width", 3)
      });
 
   var yAxis = d3.axisLeft(yScale);
