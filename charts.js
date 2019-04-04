@@ -69,6 +69,18 @@ var drawOverallBarChart = function(data)
          return Math.round(mathFunction(d));
        }});
 
+  data.forEach(function(d,i){
+    var name = d.picture;
+    var svg = d3.select(".overallBarChart")
+    svg.append("g")
+       .classed("penguin_image", true)
+       .append("image")
+       .attr("xlink:href", name)
+       .attr("x", margins.left - 3 + i * 28.3)
+       .attr("y", 310)
+       .attr("width", 26.3)
+       .attr("height", 26.3)
+  });
   //y-axis
   var yAxis = d3.axisLeft(yScale);
 
@@ -190,13 +202,13 @@ var drawChangingLineChart = function(data)
 {
   var screen = { //the size of svg
     width: 1350,
-    height: 800
+    height: 650
   }
 
   var margins = {
     left: 50,
     top: 20,
-    bottom: 240,
+    bottom: 70,
     right: 0
   }
 
@@ -262,18 +274,28 @@ var drawChangingLineChart = function(data)
        .attr("r", 5)
        .attr("fill", colors(i))
        .attr("opacity", 0)
+       // .on("mouseover", function(d, i) {
+       //     d3.select(this).attr({
+       //       fill: "black",
+       //       r: 8
+       //     });
+       //
+       //     d3.select(".changingLineChart")
+       //       .append("text")
+       //       .attr({
+       //        id: "t" + d.x + "-" + d.y + "-" + i,  // Create an id for text so we can select it later for removing on mouseout
+       //         x: function() { return xScale(d.x) - 30; },
+       //         y: function() { return yScale(d.y) - 15; }
+       //       })
+       //       .text(function() {
+       //        return [d.x, d.y];  // Value of the text
+       //       });
+       //   })
 
-       // .append("image")
-       // .attr("xlink:href",function(d){return d.picture})
-       // .attr("x",function(d,i){return i*300})
-       // .attr("y",500)
-
-    // console.log(d.picture);
-    //
      image.append("image")
           .attr("xlink:href", name)
           .attr("x", margins.left/2 + i*57)
-          .attr("y", 600)
+          .attr("y", 590)
           .attr("width", 55)
           .attr("height", 55)
           .on("click", function(){
@@ -285,28 +307,9 @@ var drawChangingLineChart = function(data)
             d3.select(".changingLineChart")
                 .selectAll(dot_class_name)
                 .attr("opacity", 1)
+          });
 
-
-          })
-    //
-    // img.src = d.picture
-    // console.log(img.src)
-    // img.alt = "no"
-    // img.width = "100"
-    // img.height = "100"
-
-    // img.setAttribute("src",d.picture);
-    // img.setAttribute("alt","no");
-    // img.setAttribute("width","100");
-    // img.setAttribute("height","100");
-
-     });
-
-  // svg.selectAll("image")
-  //    .data(data)
-  //    .enter()
-  //    .attr("xlink:href",function(d){return d.penguin})
-  //    .attr("x", function(d,i){return })
+      });
 
   var xAxisScale = d3.scaleLinear()
                  .domain([1, 41])
@@ -391,7 +394,9 @@ var showLines = function(){
     .selectAll("circle")
     .attr("opacity", 1)
 
+
   document.getElementById("ShowAllButton").innerHTML = "Hide All"
+
 }
 
 var hideLines = function(){

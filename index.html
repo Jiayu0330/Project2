@@ -7,12 +7,38 @@
     <script src="https://d3js.org/d3.v5.min.js"></script>
   </head>
   <body>
+    <div style="text-align:center;" />
 
-    <svg class="overallBarChart"></svg>
-    <svg class="changingBarChart"></svg>
-    <button class="button" id="ShowAllButton" onclick="buttonFunction()">Show All</button>
-    <svg class="changingLineChart"></svg>
-    <br>
+    <div class="barChart">
+      <div class="title">
+        Penguin's Final Grade
+      </div>
+      <svg class="overallBarChart"></svg>
+        <ul>
+          <li>Quizzes are worth 15% of the grade</li>
+          <li>Homeworks are worth 15% of the grade</li>
+          <li>There are 2 tests, each worth 20% of the grade</li>
+          <li>The final is worth 30% of the grade</li>
+        </ul>
+
+    </div>
+
+    <div class="lineChart">
+      <div class="title">
+        Each Penguin's Grade Per Day
+      </div>
+      <button class="button" id="ShowAllButton" onclick="buttonFunction()">Show All</button>
+      <p>Also click the images below;)</p>
+      <br>
+      <svg class="changingLineChart"></svg>
+        <ul>
+          <li>Quizzes: Day 1-14, Day 16-29, Day 31-40</li>
+          <li>Test: Day 15, Day 30</li>
+          <li>Final: Day 41</li>
+        </ul>
+
+    </div>
+
     <!-- <button id="PrevButton">Previous Day</button>
     <p id="DayParagraph">Day 1</p>
     <button id="NextButton">Next Day</button> -->
