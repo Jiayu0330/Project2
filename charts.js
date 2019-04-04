@@ -190,7 +190,7 @@ var drawChangingLineChart = function(data)
   var margins = {
     left: 50,
     top: 20,
-    bottom: 340,
+    bottom: 240,
     right: 0
   }
 
@@ -220,13 +220,19 @@ var drawChangingLineChart = function(data)
 
   var image = svg.append("g")
                  .classed("image", true)
+
+  var dot = svg.append("g")
+                 .classed("dot", true)
+
   data.forEach(function(d,i){
     penguinData = calculatePenguinData(d);
     // console.log(penguinData);
     var name = d.picture;
     var modified_name = d.picture.replace(".png","")
-    var class_name = "." + modified_name
-    //console.log(class_name);
+    var path_class_name = "." + modified_name
+    var dot_modified_name = modified_name + "Dot"
+    var dot_class_name = "." + dot_modified_name
+    //console.log(path_class_name);
 
     path.append("path")
        .datum(penguinData)
@@ -235,7 +241,19 @@ var drawChangingLineChart = function(data)
        .attr("fill", "none")
        .attr("stroke", colors(i))
        .attr("stroke-width", 3)
-       .attr("opacity",0)
+       .attr("opacity", 0)
+
+    dot.selectAll(".dot")
+       .data(penguinData)
+       .enter()
+       .append("circle")
+       .attr("class", dot_modified_name)
+       .attr("cx", function(d, i) {return xScale(i);})
+       .attr("cy", function(d) {return yScale(d);})
+       .attr("r", 5)
+       .attr("fill", colors(i))
+       .attr("opacity", 0)
+
        // .append("image")
        // .attr("xlink:href",function(d){return d.picture})
        // .attr("x",function(d,i){return i*300})
@@ -246,14 +264,20 @@ var drawChangingLineChart = function(data)
      image.append("image")
           .attr("xlink:href", name)
           .attr("x", margins.left/2 + i*57)
-          .attr("y", 500)
+          .attr("y", 600)
           .attr("width", 55)
           .attr("height", 55)
           .on("click", function(){
-            console.log(class_name)
+            //console.log(class_name)
             d3.select(".changingLineChart")
-              .selectAll(class_name)
+              .selectAll(path_class_name)
               .attr("opacity", 1)
+
+            d3.select(".changingLineChart")
+                .selectAll(dot_class_name)
+                .attr("opacity", 1)
+
+
           })
     //
     // img.src = d.picture
@@ -354,6 +378,10 @@ var showLines = function(){
     .selectAll("g.path path")
     .attr("opacity", 1);
 
+  d3.select(".changingLineChart")
+    .selectAll("circle")
+    .attr("opacity", 1)
+
   document.getElementById("ShowAllButton").innerHTML = "Hide All"
 }
 
@@ -362,20 +390,28 @@ var hideLines = function(){
     .selectAll("g.path path")
     .attr("opacity", 0)
 
+  d3.select(".changingLineChart")
+    .selectAll("circle")
+    .attr("opacity", 0)
+
   document.getElementById("ShowAllButton").innerHTML = "Show All"
 }
 
-var showOneLine = function(penguinName){
-  var name = penguinName
-  console.log(name)
-
-  // var svg = d3.select(".changingLineChart");
-
-  // d3.select(".changingLineChart")
-  d3.select(".changingLineChart")
-    .selectAll(name)
-    .attr("opacity", 1)
-}
+// var showOneLine = function(penguinName){
+//   var name = penguinName
+//   console.log(name)
+//
+//   // var svg = d3.select(".changingLineChart");
+//
+//   // d3.select(".changingLineChart")
+//   d3.select(".changingLineChart")
+//     .selectAll(name)
+//     .attr("opacity", 1)
+//
+//   d3.select(".changingLineChart")
+//     .selectAll("circle")
+//     .attr("opacity", 1)
+// }
 
 dataP.then(function(data)
 {
