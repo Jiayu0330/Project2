@@ -39,7 +39,9 @@ var drawOverallBarChart = function(data)
               .attr("width", screen.width)
               .attr("height", screen.height)
 
-  var colors = d3.scaleOrdinal(d3.schemeCategory10)
+              var colors = d3.scaleOrdinal()
+                             .domain([0,22])
+                             .range(["#e41a1c","#377eb8","#4daf4a","#984ea3","#ff7f00","#a65628","#f781bf","#999999","#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854","#ffd92f","#e5c494","#8dd3c7","#bebada","#fb8072","#80b1d3","#fdb462","#fccde5","#d9d9d9","#bc80bd","#ccebc5","#ffed6f"])
 
   svg.append("g")
      .classed("rect", true)
@@ -134,7 +136,11 @@ var drawChangingBarChart = function(data)
               .attr("width", screen.width)
               .attr("height", screen.height)
 
-  var colors = d3.scaleOrdinal(d3.schemeCategory10)
+  // var colors = d3.scaleOrdinal(d3.schemeCategory10)
+  var colors = d3.scaleOrdinal()
+                 .domain([0,22])
+                 .range(["#e41a1c","#377eb8","#4daf4a","#984ea3","#ff7f00","#a65628","#f781bf","#999999","#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854","#ffd92f","#e5c494","#8dd3c7","#bebada","#fb8072","#80b1d3","#fdb462","#fccde5","#d9d9d9","#bc80bd","#ccebc5","#ffed6f"])
+
 
   svg.append("g")
      .classed("rect", true)
@@ -209,7 +215,10 @@ var drawChangingLineChart = function(data)
               .attr("width", screen.width)
               .attr("height", screen.height)
 
-  var colors = d3.scaleOrdinal(d3.schemeCategory10)
+  // var colors = d3.scaleOrdinal(d3.schemeCategory10)
+  var colors = d3.scaleOrdinal()
+                 .domain([0,22])
+                 .range(["#e41a1c","#377eb8","#4daf4a","#984ea3","#ff7f00","#a65628","#f781bf","#999999","#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854","#ffd92f","#e5c494","#8dd3c7","#bebada","#fb8072","#80b1d3","#fdb462","#fccde5","#d9d9d9","#bc80bd","#ccebc5","#ffed6f"])
 
   var drawLine = d3.line()
                    .x(function(d,i){return xScale(i);})
@@ -416,7 +425,7 @@ var hideLines = function(){
 dataP.then(function(data)
 {
   drawOverallBarChart(data); //Final grade of each penguin
-  drawChangingBarChart(data);
+  // drawChangingBarChart(data);
   drawChangingLineChart(data);
   // calculatePenguinData(data[0]); // temporary
 },
