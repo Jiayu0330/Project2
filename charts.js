@@ -236,8 +236,18 @@ var drawChangingLineChart = function(data)
                    .x(function(d,i){return xScale(i);})
                    .y(function(d){return yScale(d)});
 
+
+  var drawArea = d3.area()
+                   .x(function(d,i){return xScale(i);})
+                   .y0(function(d){return height;})
+                   .y1(function(d){return yScale(d);});
+
+
   var path = svg.append("g")
                 .classed("path", true)
+
+  var area = svg.append("g")
+                .classed("area", true)
 
   var image = svg.append("g")
                  .classed("image", true)
@@ -253,9 +263,12 @@ var drawChangingLineChart = function(data)
     var path_class_name = "." + modified_name
     var dot_modified_name = modified_name + "Dot"
     var dot_class_name = "." + dot_modified_name
+    var area_name = modified_name + "Area"
+    var area_class_name = "." + modified_name + "Area"
     //console.log(path_class_name);
 
     path.append("path")
+       .attr("id", "line")
        .datum(penguinData)
        .attr("class", modified_name)
        .attr("d", drawLine)
@@ -263,6 +276,8 @@ var drawChangingLineChart = function(data)
        .attr("stroke", colors(i))
        .attr("stroke-width", 3)
        .attr("opacity", 0)
+
+
 
     dot.selectAll(".dot")
        .data(penguinData)
@@ -291,6 +306,14 @@ var drawChangingLineChart = function(data)
        //        return [d.x, d.y];  // Value of the text
        //       });
        //   })
+     area.append("path")
+      .attr("id", "area")
+      .datum(penguinData)
+      .attr("class", area_name)
+      .attr("d",drawArea)
+      .attr("fill", colors(i))
+      .attr("stroke", colors(i))
+      .attr("opacity", 0)
 
      image.append("image")
           .attr("xlink:href", name)
@@ -307,6 +330,12 @@ var drawChangingLineChart = function(data)
             d3.select(".changingLineChart")
                 .selectAll(dot_class_name)
                 .attr("opacity", 1)
+
+            // d3.select(".changingLineChart")
+            //   .selectAll(area_class_name)
+            //   .attr("opacity", 1)
+
+
           });
 
       });
@@ -385,9 +414,22 @@ var buttonFunction = function(){
   }
 }
 
+var buttonAreaFunction = function(){
+  var buttonId = document.getElementById("ShowAreaButton").innerHTML
+
+  // console.log(buttonId)
+
+  if (buttonId == "Show Area"){
+    showArea()
+  }
+  else {
+    hideArea()
+  }
+}
+
 var showLines = function(){
   d3.select(".changingLineChart")
-    .selectAll("g.path path")
+    .selectAll("#line")
     .attr("opacity", 1);
 
   d3.select(".changingLineChart")
@@ -409,6 +451,32 @@ var hideLines = function(){
     .attr("opacity", 0)
 
   document.getElementById("ShowAllButton").innerHTML = "Show All"
+}
+
+var showArea = function(){
+  d3.select(".changingLineChart")
+    .selectAll("#area")
+    .attr("opacity", 1);
+
+  // d3.select(".changingLineChart")
+  //   .selectAll("circle")
+  //   .attr("opacity", 1)
+
+
+  document.getElementById("ShowAreaButton").innerHTML = "Hide Area"
+
+}
+
+var hideArea = function(){
+  d3.select(".changingLineChart")
+    .selectAll("#area")
+    .attr("opacity", 0)
+
+  // d3.select(".changingLineChart")
+  //   .selectAll("circle")
+  //   .attr("opacity", 0)
+
+  document.getElementById("ShowAreaButton").innerHTML = "Show Area"
 }
 
 // var showOneLine = function(penguinName){
