@@ -315,21 +315,45 @@ var drawChangingLineChart = function(data)
       .attr("stroke", colors(i))
       .attr("opacity", 0)
 
+     var showLineB = false;
+     var showDotB = false;
      image.append("image")
           .attr("xlink:href", name)
           .attr("x", margins.left/2 + i*57)
           .attr("y", 590)
           .attr("width", 55)
           .attr("height", 55)
-          .on("click", function(){
+          .on("click", function(show){
             //console.log(class_name)
             d3.select(".changingLineChart")
               .selectAll(path_class_name)
-              .attr("opacity", 1)
+              .attr("opacity", function() {
+                var show = showLineB;
+                console.log("line: " + show);
+                if (show == true) {
+                  showLineB = false
+                  return 0;
+                }
+                else{
+                  showLineB = true
+                  return 1;
+                }
+              });
 
             d3.select(".changingLineChart")
                 .selectAll(dot_class_name)
-                .attr("opacity", 1)
+                .attr("opacity", function() {
+                  var show = showDotB;
+                  console.log("dot: " + show);
+                  if (show == true) {
+                    showDotB = false
+                    return 0;
+                  }
+                  else{
+                    showDotB = true
+                    return 1;
+                  }
+                });
 
             // d3.select(".changingLineChart")
             //   .selectAll(area_class_name)
