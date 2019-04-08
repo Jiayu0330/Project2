@@ -343,15 +343,15 @@ var drawChangingLineChart = function(data)
             d3.select(".changingLineChart")
                 .selectAll(dot_class_name)
                 .attr("opacity", function() {
-                  var show = showDotB;
+                  var show = showLineB;
                   console.log("dot: " + show);
                   if (show == true) {
-                    showDotB = false
-                    return 0;
+                    // showDotB = false
+                    return 1;
                   }
                   else{
-                    showDotB = true
-                    return 1;
+                    // showDotB = true
+                    return 0;
                   }
                 });
 
