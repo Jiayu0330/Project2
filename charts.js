@@ -321,14 +321,28 @@ var drawChangingLineChart = function(data)
 
      var showLineB = false;
      var showDotB = false;
+     var showImageB = false;
      image.append("image")
           .attr("xlink:href", name)
           .attr("x", margins.left/2 + i*55)
           .attr("y", 590)
           .attr("width", 50)
           .attr("height", 50)
-          .on("click", function(show){
-            //console.log(class_name)
+          .on("click", function(d){
+            console.log(d);
+            d3.select(this)
+              .attr("y", function() {
+                var show = showImageB;
+                if (show == true) {
+                  showImageB = false;
+                  return 590;
+                }
+                else{
+                  showImageB = true;
+                  return 200;
+                }
+              });
+
             d3.select(".changingLineChart")
               .selectAll(path_class_name)
               .attr("opacity", function() {
