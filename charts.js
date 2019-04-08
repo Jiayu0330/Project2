@@ -201,14 +201,14 @@ var drawChangingBarChart = function(data)
 var drawChangingLineChart = function(data)
 {
   var screen = { //the size of svg
-    width: 1350,
-    height: 650
+    width: 1300,
+    height: 680
   }
 
   var margins = {
     left: 50,
     top: 20,
-    bottom: 70,
+    bottom: 100,
     right: 0
   }
 
@@ -290,22 +290,26 @@ var drawChangingLineChart = function(data)
        .attr("fill", colors(i))
        .attr("opacity", 0)
        // .on("mouseover", function(d, i) {
-       //     d3.select(this).attr({
-       //       fill: "black",
-       //       r: 8
-       //     });
+       //   d3.select(this)
+       //     .attr("r", 7);
+       //     //.attr("fill", "white");
        //
-       //     d3.select(".changingLineChart")
-       //       .append("text")
-       //       .attr({
-       //        id: "t" + d.x + "-" + d.y + "-" + i,  // Create an id for text so we can select it later for removing on mouseout
-       //         x: function() { return xScale(d.x) - 30; },
-       //         y: function() { return yScale(d.y) - 15; }
-       //       })
-       //       .text(function() {
-       //        return [d.x, d.y];  // Value of the text
-       //       });
-       //   })
+       //   svg.append("text")
+       //      .attr("id", "text" + i + "-" + d)
+       //      .attr("x", function() {return margins.left/2 + xScale(i) - 49;})
+       //      .attr("y", function() {return yScale(d) + 42;})
+       //      .text(function() {return "Score: " + d;})
+       //      .attr("fill", "#003C68")
+       //      .attr("font-size", 18);
+       //  })
+       // .on("mouseout", function(d, i) {
+       //   d3.select(this)
+       //     .attr("r", 5);
+       //     //.attr("fill", "black");
+       //
+       //   d3.select("#text" + i + "-" + d).remove();
+       // });
+
      area.append("path")
       .attr("id", "area")
       .datum(penguinData)
@@ -319,17 +323,17 @@ var drawChangingLineChart = function(data)
      var showDotB = false;
      image.append("image")
           .attr("xlink:href", name)
-          .attr("x", margins.left/2 + i*57)
+          .attr("x", margins.left/2 + i*55)
           .attr("y", 590)
-          .attr("width", 55)
-          .attr("height", 55)
+          .attr("width", 50)
+          .attr("height", 50)
           .on("click", function(show){
             //console.log(class_name)
             d3.select(".changingLineChart")
               .selectAll(path_class_name)
               .attr("opacity", function() {
                 var show = showLineB;
-                console.log("line: " + show);
+                //console.log("line: " + show);
                 if (show == true) {
                   showLineB = false
                   return 0;
@@ -344,7 +348,7 @@ var drawChangingLineChart = function(data)
                 .selectAll(dot_class_name)
                 .attr("opacity", function() {
                   var show = showLineB;
-                  console.log("dot: " + show);
+                  //console.log("dot: " + show);
                   if (show == true) {
                     // showDotB = false
                     return 1;
