@@ -339,8 +339,8 @@ var drawChangingLineChart = function(data)
                 }
                 else{
                   showImageB = true;
-                  console.log(i)
-                  console.log(yScale(mathFunction(data[i])))
+                  //console.log(i)
+                  //console.log(yScale(mathFunction(data[i])))
                   return yScale(mathFunction(data[i]));
                 }
               });
