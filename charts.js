@@ -328,8 +328,8 @@ var drawChangingLineChart = function(data)
           .attr("y", 590)
           .attr("width", 50)
           .attr("height", 50)
-          .on("click", function(d){
-            console.log(d);
+          .on("click", function(){
+            console.log(data[0]);
             d3.select(this)
               .attr("y", function() {
                 var show = showImageB;
@@ -339,7 +339,9 @@ var drawChangingLineChart = function(data)
                 }
                 else{
                   showImageB = true;
-                  return 200;
+                  console.log(i)
+                  console.log(yScale(mathFunction(data[i])))
+                  return yScale(mathFunction(data[i]));
                 }
               });
 
